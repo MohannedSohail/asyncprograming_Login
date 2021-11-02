@@ -25,18 +25,20 @@ class _RegisterState extends State<Register> {
 
   var _ageController = TextEditingController();
 
-  var _countryController = TextEditingController();
+  // var _countryController = TextEditingController();
 
   var _radioValue;
+
   // String _txt = "";
   // late SharedPreferences _prefs;
 
+  var _selectedCountry;
+  List _countryList = ["Palestine", "USA", "UK", "UAE", "SA", "China", "Cairo"];
 
   @override
   Widget build(BuildContext context) {
     var ftoast = FToast();
     ftoast.init(context);
-
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -102,19 +104,38 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     height: 10,
                   ),
-                  textField("Country", TextInputType.text,
-                      Icon(Icons.location_city), _countryController, false),
+                  // textField("Country", TextInputType.text,
+                  //     Icon(Icons.location_city), _countryController, false),
+                  Container(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: buildDropdownButton(),
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: BoxBorder.lerp(
+                            Border.all(
+                                color: Colors.black38,
+                                style: BorderStyle.solid,
+                                width: 0.8),
+                            Border.all(
+                                color: Colors.black38,
+                                style: BorderStyle.solid),
+                            0.1)),
+                  ),
                   SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
-                      buildExpandedRadioListTile(1,"Male"),
-                      SizedBox(width: 10,),
-                      buildExpandedRadioListTile(2,"Female"),
+                      buildExpandedRadioListTile(1, "Male"),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      buildExpandedRadioListTile(2, "Female"),
                     ],
                   ),
-
                   SizedBox(
                     height: 20,
                   ),
@@ -133,25 +154,24 @@ class _RegisterState extends State<Register> {
                                     _passwordController.text) {
                               if (_ageController.text.isNotEmpty &&
                                   _ageController.text != "") {
-                                if (_countryController.text.isNotEmpty &&
-                                    _countryController.text != "") {
+                                if (_selectedCountry!= null&&
+                                    _selectedCountry.toString().isNotEmpty) {
                                   if (_emailController.text.isNotEmpty &&
                                       _emailController.text != "") {
-                                    if(_radioValue!=0){
-                                      SharedPreferences   _prefs =
-                                      await SharedPreferences.getInstance();
+                                    if (_radioValue != 0) {
+                                      SharedPreferences _prefs =
+                                          await SharedPreferences.getInstance();
                                       _prefs.setString(
                                           "username", _usernameController.text);
                                       _prefs.setString(
                                           "email", _emailController.text);
                                       _prefs.setString("password",
                                           _passwordController.text.toString());
+                                      _prefs.setString("age",
+                                          _ageController.text.toString());
                                       _prefs.setString(
-                                          "age", _ageController.text.toString());
-                                      _prefs.setString(
-                                          "country", _countryController.text);
-                                      _prefs.setInt(
-                                          "Gender", _radioValue);
+                                          "country", _selectedCountry);
+                                      _prefs.setInt("Gender", _radioValue);
 
                                       ftoast.showToast(
                                         child: checkshow("Created Successfully",
@@ -164,32 +184,31 @@ class _RegisterState extends State<Register> {
                                         MaterialPageRoute(
                                           builder: (_) => Login(
                                             log_email:
-                                            _emailController.value.text,
+                                                _emailController.value.text,
                                             log_password:
-                                            _passwordController.value.text,
+                                                _passwordController.value.text,
                                           ),
                                         ),
                                       );
                                       print(
                                           " User name => ${_usernameController.text}");
-                                      print(" email => ${_emailController.text}");
+                                      print(
+                                          " email => ${_emailController.text}");
                                       print(
                                           " password => ${_passwordController.text}");
                                       print(" Age => ${_ageController.text}");
                                       print(
-                                          " Country => ${_countryController.text}");
+                                          " Country => ${_selectedCountry.text}");
                                       print(
                                           " Gender => ${_radioValue.toString()}");
-                                    }else{
-
+                                    } else {
                                       ftoast.showToast(
-                                        child:
-                                        show("Fill your Gender", Colors.red),
+                                        child: show(
+                                            "Fill your Gender", Colors.red),
                                         gravity: ToastGravity.BOTTOM,
                                         toastDuration: Duration(seconds: 2),
                                       );
                                     }
-
                                   } else {
                                     ftoast.showToast(
                                       child:
@@ -201,7 +220,7 @@ class _RegisterState extends State<Register> {
                                 } else {
                                   ftoast.showToast(
                                     child:
-                                        show("Fill your Country", Colors.red),
+                                        show("Select your Country", Colors.red),
                                     gravity: ToastGravity.BOTTOM,
                                     toastDuration: Duration(seconds: 2),
                                   );
@@ -244,30 +263,50 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Expanded buildExpandedRadioListTile(valuenum,txt) {
-    return Expanded(
-                        child: Container(
-                      child: buildRadioListTile(valuenum, txt),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: BoxBorder.lerp(
-                              Border.all(
-                                  color: Colors.black38,
-                                  style: BorderStyle.solid,
-                                  width: 0.8),
-                              Border.all(
-                                  color: Colors.black38,
-                                  style: BorderStyle.solid),
-                              0.1)),
-                    ));
+  DropdownButton<Object> buildDropdownButton() {
+    return DropdownButton(
+                      isExpanded: true,
+                      icon: Icon(Icons.location_city),
+                      borderRadius: BorderRadius.circular(15),
+                      items: _countryList.map((country) {
+                        return DropdownMenuItem(
+                          alignment: AlignmentDirectional.center,
+                          child: Text(
+                          country,
+                        ),
+                          value: country,
+                        );
+                      }).toList(),
+                      value: _selectedCountry,
+                      hint: Text("Select You Country "),
+                      onChanged: (value){
+                        setState(() {
+                          _selectedCountry=value;
+                        });
+                      },
+                    );
   }
 
-  RadioListTile<dynamic> buildRadioListTile(val,tit) {
+  Expanded buildExpandedRadioListTile(valueNum, txt) {
+    return Expanded(
+        child: Container(
+      child: buildRadioListTile(valueNum, txt),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: BoxBorder.lerp(
+              Border.all(
+                  color: Colors.black38, style: BorderStyle.solid, width: 0.8),
+              Border.all(color: Colors.black38, style: BorderStyle.solid),
+              0.1)),
+    ));
+  }
+
+  RadioListTile<dynamic> buildRadioListTile(val, tit) {
     return RadioListTile(
       title: Text("$tit"),
-  controlAffinity: ListTileControlAffinity.platform,
-    activeColor: Colors.blue,
-    selected:_radioValue==val ? true:false ,
+      controlAffinity: ListTileControlAffinity.platform,
+      activeColor: Colors.blue,
+      selected: _radioValue == val ? true : false,
       value: val,
       groupValue: _radioValue,
       onChanged: (value) {
