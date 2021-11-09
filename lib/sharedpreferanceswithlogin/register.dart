@@ -263,8 +263,9 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  DropdownButton<Object> buildDropdownButton() {
-    return DropdownButton(
+  DropdownButtonHideUnderline buildDropdownButton() {
+    return DropdownButtonHideUnderline(
+              child: DropdownButton(
                       isExpanded: true,
                       icon: Icon(Icons.location_city),
                       borderRadius: BorderRadius.circular(15),
@@ -284,7 +285,7 @@ class _RegisterState extends State<Register> {
                           _selectedCountry=value;
                         });
                       },
-                    );
+                    ));
   }
 
   Expanded buildExpandedRadioListTile(valueNum, txt) {
