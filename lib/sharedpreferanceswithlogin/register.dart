@@ -84,7 +84,7 @@ class _RegisterState extends State<Register> {
                               _passwordController,
                               true)),
                       SizedBox(
-                        width: 10,
+                        width: 15,
                       ),
                       Expanded(
                           flex: 1,
@@ -131,7 +131,7 @@ class _RegisterState extends State<Register> {
                     children: [
                       buildExpandedRadioListTile(1, "Male"),
                       SizedBox(
-                        width: 10,
+                        width: 15,
                       ),
                       buildExpandedRadioListTile(2, "Female"),
                     ],
@@ -198,7 +198,7 @@ class _RegisterState extends State<Register> {
                                           " password => ${_passwordController.text}");
                                       print(" Age => ${_ageController.text}");
                                       print(
-                                          " Country => ${_selectedCountry.text}");
+                                          " Country => ${_selectedCountry.toString()}");
                                       print(
                                           " Gender => ${_radioValue.toString()}");
                                     } else {

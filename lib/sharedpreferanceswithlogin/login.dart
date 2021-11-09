@@ -13,20 +13,14 @@ class Login extends StatelessWidget {
   var _emailController = TextEditingController();
   var _passwordController = TextEditingController();
 
-
   Login({this.log_email , this.log_password});
-
 
   @override
   Widget build(BuildContext context) {
-
-    getdata();
+    // getdata();
     checkTextFiled();
-
     log_email=_emailController.text;
     log_password=_passwordController.text;
-
-
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -90,7 +84,7 @@ class Login extends StatelessWidget {
                               print(" password => ${_passwordController.text}");
 
                               if(_emailController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
-                                Navigator.of(con).push(MaterialPageRoute(
+                                Navigator.of(con).pushReplacement(MaterialPageRoute(
                                     builder: (_) => Result_Screen()));
 
 
@@ -135,7 +129,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  void getdata() async {
+  Future getData() async {
       SharedPreferences _data= await SharedPreferences.getInstance();
           var _email=_data.getString("email");
       var _password=_data.getString("password");

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../main.dart';
 import 'login.dart';
 import 'mytoast.dart';
+import 'register.dart';
 
 class Result_Screen extends StatefulWidget {
 
@@ -27,15 +29,35 @@ class _Result_ScreenState extends State<Result_Screen> {
 
   @override
   void initState() {
+
+
     super.initState();
 
-    getdata();
-
+    getData();
     ftoast.init(context);
+
+    print("------------------ One ---------------------");
+    print(" User Name => ${_username}");
+    print(" Email => ${_email}");
+    print(" Password => ${_password}");
+    print(" Age => ${_age}");
+    print(" Country => ${_country}");
+    print(" _genderval => ${_genderval}");
+    print(" Gender => ${_genderval==1? _gender="Male": _genderval==2? _gender="Female":" "}");
   }
 
   @override
   Widget build(BuildContext context) {
+
+    print("------------------ Two ---------------------");
+    print(" User Name => ${_username}");
+    print(" Email => ${_email}");
+    print(" Password => ${_password}");
+    print(" Age => ${_age}");
+    print(" Country => ${_country}");
+    print(" _genderval => ${_genderval}");
+    print(" Gender => ${_genderval==1? _gender="Male": _genderval==2? _gender="Female":" "}");
+
     return MaterialApp(
     debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -60,7 +82,8 @@ class _Result_ScreenState extends State<Result_Screen> {
                 Text("Gender: ${_genderval==1? _gender="Male": _genderval==2? _gender="Female":" "}",),
                 SizedBox(height: 20,),
 
-                if(isProgress)
+
+    if(isProgress)
                   CircularProgressIndicator(
                     backgroundColor: Colors.red,
 
@@ -82,13 +105,14 @@ class _Result_ScreenState extends State<Result_Screen> {
                     _gender="";
                     isProgress=true;
                   });
+                  print("------------------ Three ---------------------");
                   print(" User Name => ${_username}");
                   print(" Email => ${_email}");
                   print(" Password => ${_password}");
                   print(" Age => ${_age}");
                   print(" Country => ${_country}");
                   print(" _genderval => ${_genderval}");
-                  print(" Gender => ${_gender}");
+                  print(" Gender => ${_genderval==1? _gender="Male": _genderval==2? _gender="Female":" "}");
 
 
                   ftoast.showToast(
@@ -96,7 +120,7 @@ class _Result_ScreenState extends State<Result_Screen> {
                     gravity: ToastGravity.BOTTOM,
                     toastDuration: Duration(seconds: 4),
                   );
-                  Future.delayed(Duration(seconds: 3), ()=> Navigator.of(context).push(MaterialPageRoute(
+                  Future.delayed(Duration(seconds: 3), ()=> Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (_) => Login())));
 
                 }, child: Text("Clear Data"),textColor: Colors.white, ),
@@ -112,7 +136,7 @@ class _Result_ScreenState extends State<Result_Screen> {
 
 
 
-  void getdata() async {
+  Future getData() async {
     SharedPreferences _data= await SharedPreferences.getInstance();
 
     setState(() {

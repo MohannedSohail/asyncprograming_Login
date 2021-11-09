@@ -5,9 +5,11 @@ import 'api/api1.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'sharedpreferanceswithlogin/splash_screen.dart';
+
 void main() async{
 
-   runApp(Login());
+   runApp((MaterialApp(debugShowCheckedModeBanner: false,home:MySplashScreen())));
 
    var data= await fetchPosts();
      print(data['userId']);
