@@ -58,9 +58,7 @@ class _Result_ScreenState extends State<Result_Screen> {
     print(" _genderval => ${_genderval}");
     print(" Gender => ${_genderval==1? _gender="Male": _genderval==2? _gender="Female":" "}");
 
-    return MaterialApp(
-    debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(title: Text("Result Screen"),),
         body: Center(
           child: DefaultTextStyle(
@@ -129,7 +127,6 @@ class _Result_ScreenState extends State<Result_Screen> {
             ),
           ),
         ),
-      ),
     );
   }
 

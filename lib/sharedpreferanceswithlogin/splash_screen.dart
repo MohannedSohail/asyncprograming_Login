@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login.dart';
+import 'pageview.dart';
 import 'resultscreen.dart';
 
 class MySplashScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class MySplashScreen extends StatefulWidget {
 class _MySplashScreenState extends State<MySplashScreen> {
   var _email;
   var _password;
+   bool ? isShow;
 
   @override
   void initState() {
@@ -30,10 +32,10 @@ class _MySplashScreenState extends State<MySplashScreen> {
     print(" MySplashScreen Email => ${_email}");
     print(" MySplashScreen Password => ${_password}");
     return FutureBuilder(
-        future: Future.delayed(Duration(seconds: 4), () => _email!=null && _password!=null ? Result_Screen():Login()),
+        future: Future.delayed(Duration(seconds: 2), () => ((_email!=null && _password!=null) ? Result_Screen():((isShow==false||isShow==null)?MyPageView():Login()))),
         builder: (con, snapshot) {
           if(snapshot.hasData){
-            return _email!=null && _password!=null ? Result_Screen():Login();
+            return ((_email!=null && _password!=null) ? Result_Screen():((isShow==false||isShow==null)?MyPageView():Login()));
           }else{
             return buildMaterialApp();
           }
@@ -43,6 +45,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
     SharedPreferences _data= await SharedPreferences.getInstance();
     _email=_data.getString("email");
     _password=_data.getString("password");
+    isShow=_data.getBool("isShow")!;
   }
 
 }

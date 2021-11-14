@@ -40,9 +40,7 @@ class _RegisterState extends State<Register> {
     var ftoast = FToast();
     ftoast.init(context);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text("Register Screen"),
         ),
@@ -259,7 +257,6 @@ class _RegisterState extends State<Register> {
             ),
           ),
         ),
-      ),
     );
   }
 

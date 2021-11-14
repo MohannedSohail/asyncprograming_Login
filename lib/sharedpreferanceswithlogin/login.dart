@@ -22,9 +22,7 @@ class Login extends StatelessWidget {
     log_email=_emailController.text;
     log_password=_passwordController.text;
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text("Login Screen"),
         ),
@@ -125,8 +123,8 @@ class Login extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
+
   }
 
   Future getData() async {
