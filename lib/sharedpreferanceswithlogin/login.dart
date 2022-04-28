@@ -1,4 +1,4 @@
-import 'package:asyncprograming/components.dart';
+import 'package:asyncprograming/shared_components.dart';
 import 'package:asyncprograming/sharedpreferanceswithlogin/resultscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
